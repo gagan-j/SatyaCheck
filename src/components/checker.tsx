@@ -75,7 +75,7 @@ export function Checker() {
             <Textarea
               ref={textAreaRef}
               name="content"
-              placeholder="Enter text or an article URL to start fact-checking... (Shift+Enter for new line)"
+              placeholder="Enter text or an article URL to start fact-checking..."
               className="min-h-[150px] w-full resize-y rounded-xl border-white/10 bg-white/5 p-4 text-base shadow-inner focus-visible:ring-1 focus-visible:ring-white/40 backdrop-blur-sm"
               required
               onKeyDown={handleKeyDown}
