@@ -2,14 +2,8 @@
 
 import { z } from 'zod';
 import {
-  reasonMultimodally,
-} from '@/ai/flows/reason-multimodally';
-import {
-  compareClaimsAgainstTrustedSources,
-} from '@/ai/flows/compare-claims-against-trusted-sources';
-import {
-  extractYouTubeTranscript,
-} from '@/ai/flows/extract-real-time-youtube-transcripts';
+  analyzeContentForMisinformation,
+} from '@/ai/flows/analyze-content-for-misinformation';
 import type { AnalysisResult } from '@/lib/types';
 
 const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/;
@@ -40,23 +34,23 @@ export async function performAnalysis(
       };
     }
 
-    let { content } = validatedFields.data;
-    const originalContent = content;
-    let contentToAnalyze = content;
-    
-    const analysisPromise = reasonMultimodally({ text: contentToAnalyze });
-    const sourcesPromise = compareClaimsAgainstTrustedSources({ claim: contentToAnalyze.substring(0, 500) });
+    const { content } = validatedFields.data;
 
-    const [analysisResult, sourcesResult] = await Promise.all([analysisPromise, sourcesPromise]);
+    if (youtubeRegex.test(content)) {
+       return {
+        ...prevState,
+        error: 'Sorry, YouTube video fact-checking is not supported.',
+      };
+    }
     
-    const verdict = 'verdict' in analysisResult ? (analysisResult as any).verdict : (analysisResult as any).analysisResult;
+    const result = await analyzeContentForMisinformation({ content });
 
     const newResult: AnalysisResult = {
       id: new Date().toISOString(),
-      claim: originalContent,
-      verdict: verdict,
-      explanation: analysisResult.explanation,
-      sources: sourcesResult.sources,
+      claim: content,
+      verdict: result.verdict,
+      explanation: result.explanation,
+      sources: result.sources,
     };
 
     return {
