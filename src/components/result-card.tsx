@@ -9,7 +9,7 @@ import {
   CardDescription,
 } from '@/components/ui/card';
 import { Separator } from './ui/separator';
-import { CheckCircle, AlertTriangle, XCircle, Info, Link as LinkIcon } from 'lucide-react';
+import { CheckCircle, AlertTriangle, XCircle, Info, Link as LinkIcon, Quote } from 'lucide-react';
 
 type VerdictDisplay = {
   text: string;
@@ -43,14 +43,9 @@ function isValidUrl(string: string) {
 export default function ResultCard({ result }: { result: AnalysisResult }) {
   const { Icon, text, variant } = getVerdictDisplay(result.verdict);
 
-  // For a pure black and white theme, we can map variants to something more neutral.
-  // Or, we can rely on the theme to handle destructive as a shade.
-  // Here we will just use the variant as is, and let the theme dictate the color.
-  // The destructive variant will be a dark red as per the updated globals.css which is fine for accessibility.
-
   return (
     <div className="break-inside-avoid transform transition-transform duration-300 ease-in-out hover:scale-[1.02]">
-      <Card className="shadow-md bg-card/60 backdrop-blur-xl border border-white/10">
+      <Card className="shadow-md bg-card/60 backdrop-blur-xl border border-white/10 rounded-2xl">
         <CardHeader>
           <Badge variant={variant} className="w-fit">
             <Icon className="mr-2 h-4 w-4" />
@@ -60,30 +55,34 @@ export default function ResultCard({ result }: { result: AnalysisResult }) {
             "{result.explanation}"
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <Separator />
-          <p className="mt-4 text-sm text-muted-foreground font-semibold">Original Content:</p>
-          <p className="mt-1 text-sm text-muted-foreground line-clamp-3">{result.claim}</p>
+        <CardContent className="space-y-4">
+          <div className="flex items-start gap-3 text-sm text-muted-foreground">
+            <Quote className="h-4 w-4 shrink-0 mt-1" />
+            <p className="line-clamp-3 italic">
+              {result.claim}
+            </p>
+          </div>
+
+          {result.sources && result.sources.filter(isValidUrl).length > 0 && (
+            <>
+              <Separator />
+              <div className="flex flex-col gap-2 text-sm">
+                {result.sources.filter(isValidUrl).map((source, index) => (
+                  <a
+                    key={index}
+                    href={source}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-primary-foreground/80 hover:underline"
+                  >
+                    <LinkIcon className="h-4 w-4 shrink-0" />
+                    <span className="truncate">{new URL(source).hostname}</span>
+                  </a>
+                ))}
+              </div>
+            </>
+          )}
         </CardContent>
-        {result.sources && result.sources.length > 0 && (
-          <CardFooter className="flex flex-col items-start gap-2">
-            <p className="text-sm text-muted-foreground font-semibold">Verified Sources:</p>
-            <div className="flex flex-col space-y-2 text-sm">
-              {result.sources.filter(isValidUrl).map((source, index) => (
-                <a
-                  key={index}
-                  href={source}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center text-primary-foreground/80 hover:underline"
-                >
-                  <LinkIcon className="mr-2 h-3 w-3" />
-                  <span className="truncate">{new URL(source).hostname}</span>
-                </a>
-              ))}
-            </div>
-          </CardFooter>
-        )}
       </Card>
     </div>
   );
