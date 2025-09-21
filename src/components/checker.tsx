@@ -56,13 +56,13 @@ export function Checker() {
 
   return (
     <div className="space-y-8">
-      <Card className="shadow-lg">
+      <Card className="shadow-lg bg-card/60 backdrop-blur-xl border border-white/10">
         <CardContent className="p-6">
           <form action={formAction} className="space-y-4">
             <Textarea
               name="content"
               placeholder="Enter text, article URL, or YouTube link to start fact-checking..."
-              className="min-h-[120px] w-full resize-y bg-background text-base"
+              className="min-h-[120px] w-full resize-y bg-background/50 text-base"
               required
             />
             <div className="flex flex-col sm:flex-row gap-4 justify-between">

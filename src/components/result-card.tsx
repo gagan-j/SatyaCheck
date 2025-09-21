@@ -41,7 +41,7 @@ export default function ResultCard({ result }: { result: AnalysisResult }) {
 
   return (
     <div className="break-inside-avoid transform transition-transform duration-300 ease-in-out hover:scale-[1.02]">
-      <Card className="shadow-md">
+      <Card className="shadow-md bg-card/60 backdrop-blur-xl border border-white/10">
         <CardHeader>
           <Badge variant={variant} className="w-fit">
             <Icon className="mr-2 h-4 w-4" />
