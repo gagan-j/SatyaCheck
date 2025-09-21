@@ -46,17 +46,17 @@ export function Checker() {
         description: state.error,
       });
     }
-  }, [state.error, state.timestamp, toast]);
+  }, [state, toast]);
 
   return (
     <div className="space-y-8">
-      <Card className="shadow-lg bg-card/60 backdrop-blur-xl border border-white/10">
+      <Card className="shadow-lg bg-background/50 backdrop-blur-xl border border-white/10 rounded-2xl">
         <CardContent className="p-6">
           <form action={formAction} className="space-y-4">
             <Textarea
               name="content"
               placeholder="Enter text or an article URL to start fact-checking..."
-              className="min-h-[150px] w-full resize-y rounded-xl border-0 bg-black/20 p-4 text-base shadow-inner focus-visible:ring-1 focus-visible:ring-white/40"
+              className="min-h-[150px] w-full resize-y rounded-xl border-white/10 bg-white/5 p-4 text-base shadow-inner focus-visible:ring-1 focus-visible:ring-white/40 backdrop-blur-sm"
               required
             />
             <div className="flex flex-col sm:flex-row gap-4 justify-end">
