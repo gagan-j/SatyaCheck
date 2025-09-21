@@ -56,7 +56,7 @@ export function Checker() {
             <Textarea
               name="content"
               placeholder="Enter text or an article URL to start fact-checking..."
-              className="min-h-[120px] w-full resize-y bg-background/50 text-base"
+              className="min-h-[150px] w-full resize-y rounded-xl border-0 bg-black/20 p-4 text-base shadow-inner focus-visible:ring-1 focus-visible:ring-white/40"
               required
             />
             <div className="flex flex-col sm:flex-row gap-4 justify-end">
