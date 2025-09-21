@@ -3,9 +3,7 @@ import { Badge } from '@/components/ui/badge';
 import {
   Card,
   CardContent,
-  CardFooter,
   CardHeader,
-  CardTitle,
   CardDescription,
 } from '@/components/ui/card';
 import { Separator } from './ui/separator';
@@ -14,19 +12,19 @@ import { CheckCircle, AlertTriangle, XCircle, Info, Link as LinkIcon, Quote } fr
 type VerdictDisplay = {
   text: string;
   Icon: React.ElementType;
-  variant: 'default' | 'secondary' | 'destructive' | 'outline';
+  variant: 'success' | 'danger' | 'secondary' | 'outline';
 };
 
 function getVerdictDisplay(verdict: string): VerdictDisplay {
   const lowerVerdict = verdict.toLowerCase();
   if (lowerVerdict.includes('misinformation') || lowerVerdict.includes('false')) {
-    return { text: 'Likely Misinformation', Icon: XCircle, variant: 'destructive' };
+    return { text: 'Likely Misinformation', Icon: XCircle, variant: 'danger' };
   }
   if (lowerVerdict.includes('misleading') || lowerVerdict.includes('partially true')) {
     return { text: 'Potentially Misleading', Icon: AlertTriangle, variant: 'secondary' };
   }
   if (lowerVerdict.includes('factual') || lowerVerdict.includes('true')) {
-    return { text: 'Likely Factual', Icon: CheckCircle, variant: 'default' };
+    return { text: 'Likely Factual', Icon: CheckCircle, variant: 'success' };
   }
   return { text: 'Analysis', Icon: Info, variant: 'outline' };
 }
