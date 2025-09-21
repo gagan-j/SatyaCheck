@@ -68,7 +68,7 @@ export function Checker() {
             <div className="flex flex-col sm:flex-row gap-4 justify-between">
               <div className="w-full sm:w-auto">
                 <Select name="language" defaultValue="English">
-                  <SelectTrigger className="w-full sm:w-[180px]">
+                  <SelectTrigger className="w-full sm:w-[180px] bg-background/50 border-white/20">
                     <SelectValue placeholder="Select Language" />
                   </SelectTrigger>
                   <SelectContent>
