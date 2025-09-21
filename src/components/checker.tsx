@@ -9,7 +9,7 @@ import { useToast } from '@/hooks/use-toast';
 import { ArrowRight, LoaderCircle } from 'lucide-react';
 import ResultsDisplay from './results-display';
 import { Card, CardContent } from './ui/card';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 const initialState: FormState = {
   results: [],
@@ -37,6 +37,8 @@ function SubmitButton() {
 export function Checker() {
   const [state, formAction] = useActionState(performAnalysis, initialState);
   const { toast } = useToast();
+  const formRef = useRef<HTMLFormElement>(null);
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     if (state.error) {
@@ -47,17 +49,36 @@ export function Checker() {
       });
     }
   }, [state, toast]);
+  
+  useEffect(() => {
+    if (!state.error && formRef.current) {
+        formRef.current.reset();
+    }
+  }, [state.results]);
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+       // Manually trigger form submission
+      if (formRef.current) {
+        const submitButton = formRef.current.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+        submitButton?.click();
+      }
+    }
+  };
 
   return (
     <div className="space-y-8">
       <Card className="shadow-lg bg-background/50 backdrop-blur-xl border border-white/10 rounded-2xl">
         <CardContent className="p-6">
-          <form action={formAction} className="space-y-4">
+          <form ref={formRef} action={formAction} className="space-y-4">
             <Textarea
+              ref={textAreaRef}
               name="content"
-              placeholder="Enter text or an article URL to start fact-checking..."
+              placeholder="Enter text or an article URL to start fact-checking... (Shift+Enter for new line)"
               className="min-h-[150px] w-full resize-y rounded-xl border-white/10 bg-white/5 p-4 text-base shadow-inner focus-visible:ring-1 focus-visible:ring-white/40 backdrop-blur-sm"
               required
+              onKeyDown={handleKeyDown}
             />
             <div className="flex flex-col sm:flex-row gap-4 justify-end">
               <SubmitButton />
