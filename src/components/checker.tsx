@@ -55,7 +55,7 @@ export function Checker() {
           <form action={formAction} className="space-y-4">
             <Textarea
               name="content"
-              placeholder="Enter text, article URL, or YouTube link to start fact-checking..."
+              placeholder="Enter text or an article URL to start fact-checking..."
               className="min-h-[120px] w-full resize-y bg-background/50 text-base"
               required
             />

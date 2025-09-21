@@ -29,7 +29,7 @@ export default function ResultsDisplay({ results }: ResultsDisplayProps) {
         <FileSearch className="h-12 w-12 mb-4" />
         <h3 className="text-xl font-semibold">Your results will appear here</h3>
         <p className="mt-2 max-w-md">
-          Enter some content above and click "Check" to begin the analysis. We support text, article URLs, and YouTube links.
+          Enter some content above and click "Check" to begin the analysis. We support text and article URLs.
         </p>
       </div>
     );

@@ -44,16 +44,16 @@ export async function performAnalysis(
     const originalContent = content;
     let contentToAnalyze = content;
 
-    if (youtubeRegex.test(content)) {
-      try {
-        const transcriptResult = await extractYouTubeTranscript({ youtubeUrl: content });
-        contentToAnalyze = transcriptResult.transcript;
-      } catch (e) {
-        console.error('Error extracting YouTube transcript:', e);
-        // If transcript extraction fails, we can still try to analyze the URL itself.
-        contentToAnalyze = content;
-      }
-    }
+    // if (youtubeRegex.test(content)) {
+    //   try {
+    //     const transcriptResult = await extractYouTubeTranscript({ youtubeUrl: content });
+    //     contentToAnalyze = transcriptResult.transcript;
+    //   } catch (e) {
+    //     console.error('Error extracting YouTube transcript:', e);
+    //     // If transcript extraction fails, we can still try to analyze the URL itself.
+    //     contentToAnalyze = content;
+    //   }
+    // }
     
     const analysisPromise = analyzeContentForMisinformation({ content: contentToAnalyze });
     const sourcesPromise = compareClaimsAgainstTrustedSources({ claim: contentToAnalyze.substring(0, 500) });
