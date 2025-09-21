@@ -1,21 +1,15 @@
 'use client';
 
-import { useEffect, useActionState } from 'react';
+import { useActionState } from 'react';
 import { useFormStatus } from 'react-dom';
 import { performAnalysis, type FormState } from '@/app/actions';
 import { Button } from '@/components/ui/button';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { ArrowRight, LoaderCircle } from 'lucide-react';
 import ResultsDisplay from './results-display';
 import { Card, CardContent } from './ui/card';
+import { useEffect } from 'react';
 
 const initialState: FormState = {
   results: [],
@@ -65,21 +59,7 @@ export function Checker() {
               className="min-h-[120px] w-full resize-y bg-background/50 text-base"
               required
             />
-            <div className="flex flex-col sm:flex-row gap-4 justify-between">
-              <div className="w-full sm:w-auto">
-                <Select name="language" defaultValue="English">
-                  <SelectTrigger className="w-full sm:w-[180px] bg-background/50 border-white/20">
-                    <SelectValue placeholder="Select Language" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="English">English</SelectItem>
-                    <SelectItem value="Hindi">Hindi</SelectItem>
-                    <SelectItem value="Tamil">Tamil</SelectItem>
-                    <SelectItem value="Bengali">Bengali</SelectItem>
-                    <SelectItem value="Telugu">Telugu</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+            <div className="flex flex-col sm:flex-row gap-4 justify-end">
               <SubmitButton />
             </div>
           </form>

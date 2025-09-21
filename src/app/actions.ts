@@ -10,16 +10,12 @@ import {
 import {
   extractYouTubeTranscript,
 } from '@/ai/flows/extract-real-time-youtube-transcripts';
-import {
-  analyzeContentRegional,
-} from '@/ai/flows/support-regional-languages';
 import type { AnalysisResult } from '@/lib/types';
 
 const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/;
 
 const FormSchema = z.object({
   content: z.string().min(10, 'Please enter at least 10 characters.'),
-  language: z.string(),
 });
 
 export type FormState = {
@@ -35,7 +31,6 @@ export async function performAnalysis(
   try {
     const validatedFields = FormSchema.safeParse({
       content: formData.get('content'),
-      language: formData.get('language'),
     });
 
     if (!validatedFields.success) {
@@ -45,7 +40,7 @@ export async function performAnalysis(
       };
     }
 
-    let { content, language } = validatedFields.data;
+    let { content } = validatedFields.data;
     const originalContent = content;
     let contentToAnalyze = content;
 
@@ -60,18 +55,12 @@ export async function performAnalysis(
       }
     }
     
-    let analysisPromise;
-    if (language !== 'English') {
-      analysisPromise = analyzeContentRegional({ content: contentToAnalyze, language });
-    } else {
-      analysisPromise = analyzeContentForMisinformation({ content: contentToAnalyze });
-    }
-    
+    const analysisPromise = analyzeContentForMisinformation({ content: contentToAnalyze });
     const sourcesPromise = compareClaimsAgainstTrustedSources({ claim: contentToAnalyze.substring(0, 500) });
 
     const [analysisResult, sourcesResult] = await Promise.all([analysisPromise, sourcesPromise]);
     
-    const verdict = 'verdict' in analysisResult ? analysisResult.verdict : analysisResult.analysisResult;
+    const verdict = 'verdict' in analysisResult ? analysisResult.verdict : (analysisResult as any).analysisResult;
 
     const newResult: AnalysisResult = {
       id: new Date().toISOString(),
