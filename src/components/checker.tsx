@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect } from 'react';
-import { useFormState, useFormStatus } from 'react-dom';
+import { useEffect, useActionState } from 'react';
+import { useFormStatus } from 'react-dom';
 import { performAnalysis, type FormState } from '@/app/actions';
 import { Button } from '@/components/ui/button';
 import {
@@ -41,7 +41,7 @@ function SubmitButton() {
 }
 
 export function Checker() {
-  const [state, formAction] = useFormState(performAnalysis, initialState);
+  const [state, formAction] = useActionState(performAnalysis, initialState);
   const { toast } = useToast();
 
   useEffect(() => {
