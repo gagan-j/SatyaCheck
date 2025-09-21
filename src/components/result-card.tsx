@@ -34,6 +34,11 @@ function getVerdictDisplay(verdict: string): VerdictDisplay {
 export default function ResultCard({ result }: { result: AnalysisResult }) {
   const { Icon, text, variant } = getVerdictDisplay(result.verdict);
 
+  // For a pure black and white theme, we can map variants to something more neutral.
+  // Or, we can rely on the theme to handle destructive as a shade.
+  // Here we will just use the variant as is, and let the theme dictate the color.
+  // The destructive variant will be a dark red as per the updated globals.css which is fine for accessibility.
+
   return (
     <div className="break-inside-avoid transform transition-transform duration-300 ease-in-out hover:scale-[1.02]">
       <Card className="shadow-md">
@@ -61,7 +66,7 @@ export default function ResultCard({ result }: { result: AnalysisResult }) {
                   href={source}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center text-primary hover:underline"
+                  className="flex items-center text-primary-foreground/80 hover:underline"
                 >
                   <LinkIcon className="mr-2 h-3 w-3" />
                   <span className="truncate">{new URL(source).hostname}</span>
