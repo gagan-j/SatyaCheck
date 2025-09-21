@@ -31,6 +31,15 @@ function getVerdictDisplay(verdict: string): VerdictDisplay {
   return { text: 'Analysis', Icon: Info, variant: 'outline' };
 }
 
+function isValidUrl(string: string) {
+  try {
+    new URL(string);
+    return true;
+  } catch (_) {
+    return false;
+  }
+}
+
 export default function ResultCard({ result }: { result: AnalysisResult }) {
   const { Icon, text, variant } = getVerdictDisplay(result.verdict);
 
@@ -60,7 +69,7 @@ export default function ResultCard({ result }: { result: AnalysisResult }) {
           <CardFooter className="flex flex-col items-start gap-2">
             <p className="text-sm text-muted-foreground font-semibold">Verified Sources:</p>
             <div className="flex flex-col space-y-2 text-sm">
-              {result.sources.map((source, index) => (
+              {result.sources.filter(isValidUrl).map((source, index) => (
                 <a
                   key={index}
                   href={source}
