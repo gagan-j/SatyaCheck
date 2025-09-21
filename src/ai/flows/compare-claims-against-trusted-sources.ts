@@ -8,7 +8,7 @@
  */
 
 import {ai} from '@/ai/genkit';
-import {z} from 'genkit';
+import {z} from 'zod';
 
 const CompareClaimsAgainstTrustedSourcesInputSchema = z.object({
   claim: z.string().describe('The claim to verify.'),
@@ -26,31 +26,40 @@ export async function compareClaimsAgainstTrustedSources(input: CompareClaimsAga
   return compareClaimsAgainstTrustedSourcesFlow(input);
 }
 
-const getTrustedSources = ai.defineTool({
-  name: 'getTrustedSources',
-  description: 'Search Wikipedia, Google News, and fact-checking databases for information about a claim.',
-  inputSchema: z.object({
-    claim: z.string().describe('The claim to search for.'),
-  }),
-  outputSchema: z.array(z.string()).describe('A list of URLs from trusted sources related to the claim.'),
-}, async (input) => {
-  // Placeholder implementation; replace with actual search logic.
-  // This is a simplified example and would need actual integration with search APIs.
-  const searchResults = [
-    `https://en.wikipedia.org/wiki/${input.claim.replace(/ /g, '_')}`,
-    `https://news.google.com/search?q=${input.claim}`,
-  ];
-  return searchResults;
-});
+const searchTool = ai.defineTool(
+  {
+    name: 'search',
+    description: 'Searches the web for information about a given query.',
+    inputSchema: z.object({query: z.string()}),
+    outputSchema: z.object({
+      documents: z.array(z.object({content: z.string()})),
+    }),
+  },
+  async ({query}) => {
+    // This is where you would add your own logic to search the web
+    // and return a list of ranked documents.
+    // For this example, we'll just return some dummy data.
+    console.log(`Searching for: ${query}`);
+    return {
+      documents: [
+        {content: 'The sky is blue because of Rayleigh scattering.'},
+        {
+          content:
+            'The moon is not made of cheese, it is made of rock.',
+        },
+      ],
+    };
+  }
+);
 
 const prompt = ai.definePrompt({
   name: 'compareClaimsAgainstTrustedSourcesPrompt',
   input: {schema: CompareClaimsAgainstTrustedSourcesInputSchema},
   output: {schema: CompareClaimsAgainstTrustedSourcesOutputSchema},
-  tools: [getTrustedSources],
+  tools: [searchTool],
   prompt: `You are an expert fact-checker.
 
-  Based on the claim provided, you will use the getTrustedSources tool to gather information from trusted sources such as Wikipedia, Google News, and fact-checking databases.
+  Based on the claim provided, you will use the provided search tool to gather information from trusted sources such as Wikipedia, Google News, and fact-checking databases.
 
   Using the information from the trusted sources, determine the veracity of the claim and provide a brief explanation.
 
@@ -69,5 +78,3 @@ const compareClaimsAgainstTrustedSourcesFlow = ai.defineFlow(
     return output!;
   }
 );
-
-

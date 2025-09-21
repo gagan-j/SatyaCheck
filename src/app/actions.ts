@@ -2,8 +2,8 @@
 
 import { z } from 'zod';
 import {
-  analyzeContentForMisinformation,
-} from '@/ai/flows/analyze-content-for-misinformation';
+  reasonMultimodally,
+} from '@/ai/flows/reason-multimodally';
 import {
   compareClaimsAgainstTrustedSources,
 } from '@/ai/flows/compare-claims-against-trusted-sources';
@@ -43,24 +43,13 @@ export async function performAnalysis(
     let { content } = validatedFields.data;
     const originalContent = content;
     let contentToAnalyze = content;
-
-    // if (youtubeRegex.test(content)) {
-    //   try {
-    //     const transcriptResult = await extractYouTubeTranscript({ youtubeUrl: content });
-    //     contentToAnalyze = transcriptResult.transcript;
-    //   } catch (e) {
-    //     console.error('Error extracting YouTube transcript:', e);
-    //     // If transcript extraction fails, we can still try to analyze the URL itself.
-    //     contentToAnalyze = content;
-    //   }
-    // }
     
-    const analysisPromise = analyzeContentForMisinformation({ content: contentToAnalyze });
+    const analysisPromise = reasonMultimodally({ text: contentToAnalyze });
     const sourcesPromise = compareClaimsAgainstTrustedSources({ claim: contentToAnalyze.substring(0, 500) });
 
     const [analysisResult, sourcesResult] = await Promise.all([analysisPromise, sourcesPromise]);
     
-    const verdict = 'verdict' in analysisResult ? analysisResult.verdict : (analysisResult as any).analysisResult;
+    const verdict = 'verdict' in analysisResult ? (analysisResult as any).verdict : (analysisResult as any).analysisResult;
 
     const newResult: AnalysisResult = {
       id: new Date().toISOString(),
