@@ -1,90 +1,121 @@
-# 🔍 SatyaCheck
-## AI-Powered Fact-Checking Platform
+# SatyaCheck
 
-**SatyaCheck** is a cutting-edge fact-checking solution that empowers users to verify digital content authenticity through intelligent AI analysis and real-time web verification.
+![SatyaCheck](https://img.shields.io/badge/AI-Fact_Checker-green.svg)
+![Next.js](https://img.shields.io/badge/Next.js-15-black)
+![React](https://img.shields.io/badge/React-18-blue)
+![TypeScript](https://img.shields.io/badge/TypeScript-blue)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC)
 
----
+**SatyaCheck** is an AI-powered fact-checking platform that verifies digital content authenticity through intelligent AI analysis and real-time web verification.
 
-## ✨ Core Capabilities
+🔗 **[Live Demo](https://satyacheck.vercel.app/)**
 
-### 🎯 **Multi-Format Content Processing**
-Process diverse content types seamlessly:
-- Plain text statements and claims
-- Article URLs and web links  
-- YouTube video content via link analysis
+## Features
 
-### 🌐 **Real-Time Intelligence**
-Leverages Google Search integration to cross-reference claims against current, authoritative sources across the web.
+- **Multi-Format Content Processing**: Analyze text, URLs, and YouTube videos
+- **Real-Time Verification**: Cross-reference claims against current web sources
+- **AI-Powered Analysis**: Advanced reasoning with context understanding
+- **Structured Results**: Clear verdicts with expert explanations and source transparency
+- **Modern Interface**: Responsive design with intuitive user experience
 
-### 🧠 **Advanced AI Analysis**
-Powered by sophisticated generative AI models that understand context, evaluate evidence, and deliver clear conclusions.
+## Quick Start
 
-### 📊 **Structured Results**
-Every analysis provides:
-- **Clear Verdict** — Definitive assessment (Factual, Misinformation, Misleading)
-- **Expert Explanation** — Reasoning behind the conclusion
-- **Source Transparency** — Complete list of consulted references
+### Prerequisites
 
----
+- Node.js 18+
+- npm, yarn, or pnpm
 
-## ⚙️ System Architecture
+### Installation
 
-### 🎨 Frontend Layer
-**Modern React Experience**
-- **Next.js 15** with App Router for lightning-fast performance
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/satyacheck.git
+   cd satyacheck
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**
+   ```bash
+   cp .env.example .env.local
+   # Add your API keys for Google Genkit and other services
+   ```
+
+4. **Run the development server**
+   ```bash
+   npm run dev
+   ```
+
+5. **Open your browser**
+   Navigate to [http://localhost:3000](http://localhost:3000)
+
+## Tech Stack
+
+| Technology | Purpose |
+|------------|---------|
+| **Next.js 15** | React framework with App Router |
+| **React 18** | UI library with Server Actions |
+| **TypeScript** | Type-safe JavaScript |
+| **ShadCN UI** | Modern component library |
+| **Tailwind CSS** | Utility-first CSS framework |
+| **Google Genkit** | AI framework and orchestration |
+| **Gemini 1.5 Flash** | Advanced AI reasoning model |
+| **Google Search** | Real-time verification tool |
+
+## System Architecture
+
+### Frontend Layer
+- **Next.js 15** with App Router for optimized performance
 - **ShadCN UI** components with **Tailwind CSS** styling
-- Intuitive form handling via Server Actions
-- Responsive design optimized for all devices
+- Server Actions for seamless form handling
+- Responsive design for all devices
 
-### 🚀 Backend Infrastructure
-**Serverless & Scalable**
-- **Next.js Server Actions** orchestrate the analysis pipeline
-- Intelligent YouTube transcript extraction
-- Comprehensive error handling and user feedback
-- Built for cloud deployment (Vercel, Firebase)
+### Backend Infrastructure
+- **Next.js Server Actions** for analysis pipeline
+- YouTube transcript extraction
+- Comprehensive error handling
+- Serverless deployment ready
 
-### 🤖 AI Engine
-**Powered by Google Genkit**
-- **Core Flow**: `analyzeContentForMisinformation` — Expert fact-checker agent
-- **Specialty Flow**: `extractYouTubeTranscript` — Video content processor  
+### AI Engine
+- **Core Flow**: `analyzeContentForMisinformation` - Expert fact-checker agent
+- **Specialty Flow**: `extractYouTubeTranscript` - Video content processor
 - **Model**: Gemini 1.5 Flash for advanced reasoning
-- **Tools**: Integrated Google Search for real-time verification
+- **Tools**: Integrated Google Search for verification
 
----
+## Content Analysis Pipeline
 
-## 🛠️ Technology Stack
+1. **Input Processing** → Accept text, URLs, or YouTube links
+2. **Content Extraction** → Retrieve transcripts for video content
+3. **AI Analysis** → Understand claims and gather evidence
+4. **Web Verification** → Cross-reference with authoritative sources
+5. **Result Synthesis** → Deliver clear verdict with supporting evidence
 
-| Layer | Technology | Purpose |
-|-------|------------|---------|
-| **Frontend** | Next.js 15, React 18 | Server-rendered UI framework |
-| **Styling** | ShadCN UI, Tailwind CSS | Modern component library |
-| **AI Framework** | Google Genkit | Production-ready AI integration |
-| **Models & Tools** | Gemini 1.5 Flash, Google Search | Intelligence and verification |
-| **Language** | TypeScript | Type-safe development |
-| **Deployment** | Vercel, Firebase | Serverless hosting platforms |
+## Result Structure
 
----
+Every analysis provides:
+- **Clear Verdict** — Assessment (Factual, Misinformation, Misleading)
+- **Expert Explanation** — Reasoning behind the conclusion
+- **Source Transparency** — Complete list of references
 
-## 🎯 Key Workflows
+## Contributing
 
-### Content Analysis Pipeline
-1. **Input Processing** → Multi-format content acceptance
-2. **Content Extraction** → YouTube transcript retrieval (if applicable)
-3. **AI Analysis** → Claim understanding and evidence gathering
-4. **Web Verification** → Real-time source cross-referencing
-5. **Result Synthesis** → Clear verdict with supporting evidence
+Contributions are welcome. Please follow these guidelines:
 
-### Error Resilience
-- Graceful API failure handling
-- User-friendly error messaging  
-- Fallback mechanisms for service interruptions
+- Follow TypeScript best practices
+- Maintain consistent code formatting
+- Test AI workflows thoroughly
+- Update documentation for new features
+- Ensure responsive design
 
----
+## License
 
-## 🌟 Impact & Vision
+This project is licensed under the MIT License.
 
-SatyaCheck represents the future of digital literacy tools, combining state-of-the-art AI with user-centric design to combat misinformation in our increasingly complex information landscape. By making fact-checking accessible, transparent, and reliable, we empower users to make informed decisions based on verified information.
+## Acknowledgments
 
----
-
-*Built with precision. Powered by intelligence. Designed for truth.*
+- Google Genkit for AI framework
+- Gemini models for advanced reasoning
+- Open source community for supporting libraries
